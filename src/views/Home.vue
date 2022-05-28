@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    rg 
+    <h1>{{ count }}</h1>
+     erh w 
+    <button @click="increment" class="btn btn-danger">Increment</button>
+   
   </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+import { ref } from '@vue/reactivity'
+let count = ref(0);
+function increment () {
+  count.value++
 }
 </script>
