@@ -1,3 +1,11 @@
+<script setup>
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex"
+
+const store = useStore()
+const user =  computed(() => store.state.user);
+
+</script>
 <template>
   <div class="body">
     <div class="bg-dark">
@@ -6,7 +14,14 @@
           My App
         </router-link> 
         <div>
-          <div class="navbar-nav">
+          <div 
+          v-if="user && user.id"
+          class="navbar-nav">
+            <span class="nav-item nav-link"> Logged in as {{ user.name }} </span>
+          </div>
+          <div 
+          v-else
+          class="navbar-nav">
             <router-link class="nav-item nav-link" :to="{name: 'login'}">
               Login
             </router-link>
