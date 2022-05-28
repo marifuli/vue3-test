@@ -1,20 +1,13 @@
 <script setup>
-import { computed, reactive } from '@vue/runtime-core';
+import { computed } from '@vue/runtime-core';
 import {useStore} from 'vuex'
 const store = useStore();
 
-const filter = reactive({
-  category: null
-})
 const products = computed(() => {
   if(!store.state.products) {
     return []
-  }
-  if(filter.category)
-  {
-    return store.state.products.filter((pro) => pro.category == filter.category)
-  }
-  return store.state.products
+  } 
+  return store.state.products.filter((pro) => store.state.carts.indexOf(pro.id) > -1)
 })
 
 function  del (i) {
@@ -31,21 +24,10 @@ function cart (id) {
 
 <template>
   <div class="home">
+    <h1>My Cart: </h1>
     <div
     v-if="products && products.length"
-    >
-      <div class="filter">
-        <strong> Filter: </strong>
-        <select v-model="filter.category" class="form-control">
-          <option value="">All</option>
-          <option value="Ladies">Ladies</option>
-          <option value="Man">Man</option>
-          <option value="Kids">Kids</option>
-          <option value="Shirts">Shirts</option>
-          <option value="Pants">Pants</option>
-          <option value="etc..">etc..</option>
-        </select>
-      </div>
+    > 
       <div class="row mt-3">
         <div class="card col-3"
         v-for="(product, i) in products" :key="i"

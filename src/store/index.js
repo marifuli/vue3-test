@@ -23,7 +23,8 @@ export default createStore({
     user: userFromLocal,
     user_token: localStorage.getItem('@user_token') || null,
 
-    products: productsFromLocal
+    products: productsFromLocal,
+    carts: []
   },
   getters: {
 
@@ -54,6 +55,16 @@ export default createStore({
       state.products.splice(index, 1)
 
       localStorage.setItem('@products', JSON.stringify(state.products))
+    },
+
+    addCart: (state, id) => {
+      if(state.carts.indexOf(id) === -1) {
+        state.carts.push(id)
+      }
+    },
+    removeCart: (state, id) => {
+      const index = state.carts.indexOf(id)
+      state.carts.splice(index, 1)
     }
   },
   actions: { 

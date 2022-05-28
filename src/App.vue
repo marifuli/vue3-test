@@ -3,8 +3,11 @@ import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex"
 
 const store = useStore()
-const user =  computed(() => store.state.user);
-
+const user =  computed(() => store.state.user)
+const cart = computed(() => {
+  return store.state.carts.length
+})
+;
 </script>
 <template>
   <div class="body">
@@ -39,6 +42,13 @@ const user =  computed(() => store.state.user);
           class="navbar-text">
             <router-link class="nav-item nav-link" :to="{name: 'home'}">
               Products
+            </router-link>
+          </div>
+          <div 
+          class="navbar-text">
+            <router-link class="nav-item nav-link" :to="{name: 'cart'}">
+              Cart 
+              ({{cart}})
             </router-link>
           </div>
         </div>
