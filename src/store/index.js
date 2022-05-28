@@ -9,10 +9,10 @@ if(localStorage.getItem('@user')) {
     console.log(error)
   }
 }
-let productsFromLocal = {}
-if(localStorage.getItem('@user')) {
+let productsFromLocal = []
+if(localStorage.getItem('@products')) {
   try {
-    productsFromLocal = JSON.parse(localStorage.getItem('@user'))
+    productsFromLocal = JSON.parse(localStorage.getItem('@products'))
   } catch (error) {
     console.log(error)
   }
@@ -37,6 +37,23 @@ export default createStore({
       // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
       state.user_token = token 
       localStorage.setItem('@user_token', token)
+    },
+
+    setProduct: (state, product) => {
+      if(!state.products) state.products = []
+      if(product.id) {
+        // it should update
+        let objIndex = state.products.findIndex((obj => obj.id == product.id))
+        state.products[objIndex] = product
+      } else {
+        state.products.push({ ...product, id: (Math.random() + 1).toString(36).substring(7) })
+      }
+      localStorage.setItem('@products', JSON.stringify(state.products))
+    },
+    deleteProduct: (state, index) => {
+      state.products.splice(index, 1)
+
+      localStorage.setItem('@products', JSON.stringify(state.products))
     }
   },
   actions: { 
